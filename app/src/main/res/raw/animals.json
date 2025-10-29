@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Michi",
+    "description": "Un gato juguetón y curioso.",
+    "image": "cat1"
+  },
+  {
+    "name": "Luna",
+    "description": "Una gata tranquila que ama dormir.",
+    "image": "cat2"
+  },
+  {
+    "name": "Firulais",
+    "description": "Perro fiel y protector.",
+    "image": "dog1"
+  },
+  {
+    "name": "Rex",
+    "description": "Perro energético, ideal para correr.",
+    "image": "dog2"
+  }
+]
