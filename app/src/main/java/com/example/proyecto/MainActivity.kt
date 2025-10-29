@@ -117,14 +117,14 @@ fun TopSection(modifier: Modifier = Modifier, username: String?) {
 fun CenterSection(modifier: Modifier = Modifier) {
     //val adoptaImg: Int = R.drawable.adopta
     val adoptaList = listOf<Int>(R.drawable.adopta, R.drawable.adopta2)
-    // 🔹 Lista de animales (simulada)
+    // Lista de animales (simulada)
     val context = LocalContext.current
     val animals = remember { loadAnimalsFromJson(context) }
 
-    // 🔹 Estado: animal seleccionado (para modo zoom)
+    // Estado: animal seleccionado (para modo zoom)
     var selectedAnimal by remember { mutableStateOf<Animal?>(null) }
 
-    // 🔹 Si hay un animal seleccionado → mostrar detalle
+    // Si hay un animal seleccionado → mostrar detalle
     if (selectedAnimal != null) {
         AnimalDetail(
             context = context,
@@ -133,7 +133,7 @@ fun CenterSection(modifier: Modifier = Modifier) {
             onAdopt = { /* Acción de adoptar */ }
         )
     } else {
-        // 🔹 Si no hay selección → mostrar galería scrollable
+        // Si no hay selección → mostrar galería scrollable
 
         Column(
             modifier = modifier
@@ -190,7 +190,7 @@ fun CenterSection(modifier: Modifier = Modifier) {
     }
 }
 
-// 🔹 Vista detallada con zoom, descripción y botones
+// Vista detallada con zoom, descripción y botones
 @Composable
 fun AnimalDetail(animal: Animal, onBack: () -> Unit, onAdopt: () -> Unit, context: Context) {
     val scale = remember { Animatable(1f) }
@@ -250,7 +250,7 @@ fun AnimalDetail(animal: Animal, onBack: () -> Unit, onAdopt: () -> Unit, contex
 
 
 
-// 🔹 Modelo de datos
+// Modelo de datos
 data class Animal(
     val name: String,
     val description: String,
