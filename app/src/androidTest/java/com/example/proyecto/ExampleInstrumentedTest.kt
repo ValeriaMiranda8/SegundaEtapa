@@ -1,24 +1,35 @@
 package com.example.proyecto
 
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.*
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-import org.junit.Assert.*
+class ProfileScreenTest {
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-@RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<MainActivity>()
+
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.proyecto", appContext.packageName)
+    fun loginAndLogoutFlow_worksCorrectly() {
+
+        composeTestRule.onNodeWithText("Perfil").performClick()
+
+        composeTestRule.onNode(hasText("Usuario")).performTextInput("Abraham")
+
+        composeTestRule.onNodeWithText("Entrar").performClick()
+
+        composeTestRule.waitForIdle()
+        composeTestRule.mainClock.advanceTimeBy(1500)
+
+        composeTestRule.onNode(hasText("Hola, Abraham", substring = true)).assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("Cerrar sesión").performClick()
+
+        composeTestRule.waitForIdle()
+        composeTestRule.onNodeWithText("Iniciar sesión").assertIsDisplayed()
     }
 }
+
+
+

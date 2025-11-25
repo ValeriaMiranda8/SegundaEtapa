@@ -14,10 +14,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -44,6 +46,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -69,6 +73,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 @Composable
 fun MainScreen() {
@@ -100,15 +105,31 @@ fun TopSection(modifier: Modifier = Modifier, username: String?) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(Color(0xFF1565C0))
+            .background(Color(red = 49,72,122))
             .padding(top = 30.dp, start = 16.dp, bottom=16.dp)
     ) {
-        Text(
-            text = if (username != null) "Bienvenido, $username" else "Bienvenido",
-            color = Color.White,
-            fontSize = 20.sp,
-            modifier = Modifier.align(Alignment.BottomStart)
-        )
+        Row {
+
+            Image(painter = painterResource(id = R.drawable.logo),
+                contentDescription = "logo",
+                modifier = Modifier
+                    .fillMaxHeight()
+                    //.width(20.dp)
+                    .padding(8.dp)
+                    .clip(RoundedCornerShape(16.dp)),
+                contentScale = ContentScale.FillHeight
+            )
+
+            Text(
+                text = if (username != null) "Bienvenido, $username a F!" else "Bienvenido a F!",
+                color = Color.White,
+                fontSize = 30.sp,
+                modifier = Modifier.padding(8.dp),
+                fontFamily = FontFamily(Font(R.font.berkshireswash_regular))
+
+
+            )
+        }
     }
 }
 
@@ -138,20 +159,22 @@ fun CenterSection(modifier: Modifier = Modifier) {
             modifier = modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .background(Color(0xFFF5F5F5))
+                .background(Color(red = 217,225,241))
                 .padding(8.dp)
         ) {
             Text(
-                text = "Adopta a tu perro o gato",
-                fontSize = 25.sp,
+                text = "ADOPTA UN AMIGO",
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily(Font(R.font.dynapuff_regular)),
                 modifier = Modifier.padding(start = 16.dp, bottom = 8.dp).align(Alignment.CenterHorizontally)
             )
             Text(
-                text = "Adopta, no compres. Al abrir las puertas de tu hogar a un perro o un gato rescatado, no solo estás ganando un amigo incondicional, estás salvando una vida y dándole una segunda oportunidad que se merecen.",
-                fontSize = 15.sp,
+                text = "PARA TODA LA VIDA",
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Light,
-                modifier = Modifier.padding(start = 16.dp, bottom = 8.dp).align(Alignment.CenterHorizontally)
+                modifier = Modifier.padding(start = 16.dp, bottom = 8.dp).align(Alignment.CenterHorizontally),
+                fontFamily = FontFamily(Font(R.font.playpensans_bold, FontWeight.Bold))
             )
             Image(painter = painterResource(id = adoptaList.random()),
                 contentDescription = "Adopta",
@@ -167,9 +190,12 @@ fun CenterSection(modifier: Modifier = Modifier) {
                 val imageRes = getDrawableId(context, animal.image)
                 Text(
                     text = animal.name,
-                    fontSize = 18.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
+                    modifier = Modifier.padding(start = 16.dp, bottom = 8.dp),
+                    fontFamily = FontFamily(Font(R.font.dynapuff_regular)),
+                    color = Color(red = 49,72,122)
+
                 )
                 Image(
                     painter = painterResource(id = imageRes),
@@ -182,6 +208,7 @@ fun CenterSection(modifier: Modifier = Modifier) {
                         .clickable { selectedAnimal = animal }
                     ,
                     contentScale = ContentScale.Crop
+
                 )
 
             }
@@ -220,16 +247,19 @@ fun AnimalDetail(animal: Animal, onBack: () -> Unit, onAdopt: () -> Unit, contex
 
         Text(
             text = animal.name,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily(Font(R.font.dynapuff_regular)),
+
         )
 
         Text(
             text = animal.description,
             fontSize = 16.sp,
-            color = Color.Gray,
+            color = Color.Black,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(vertical = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp),
+            fontFamily = FontFamily(Font(R.font.playpensans_bold, FontWeight.Bold))
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -237,11 +267,11 @@ fun AnimalDetail(animal: Animal, onBack: () -> Unit, onAdopt: () -> Unit, contex
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Button(onClick = onAdopt) {
+            Button(onClick = onAdopt, colors = ButtonDefaults.buttonColors(containerColor = Color(red = 49,72,122))) {
                 Text("Adoptar")
             }
             Button(onClick = onBack, colors = ButtonDefaults.buttonColors(containerColor = Color.LightGray)) {
-                Text("Regresar")
+                Text("Regresar", color=Color(red = 49,72,122))
             }
         }
     }
@@ -275,16 +305,16 @@ fun BottomMenu(username: String?,navController: NavHostController) {
         horizontalArrangement = Arrangement.SpaceAround
     ) {
         TextButton(onClick = { navController.navigate("inicio") }) {
-            Text("Inicio")
+            Text("Inicio", color = Color(red = 49,72,122), fontSize = 14.sp)
         }
         if (username != null && username != ""){
             TextButton(onClick = { navController.navigate("inicio") }) {
-                Text("Subir")
+                Text("Subir", color = Color(red = 49,72,122), fontSize = 14.sp)
             }
         }
 
         TextButton(onClick = { navController.navigate("perfil") }) {
-            Text("Perfil")
+            Text("Perfil", color = Color(red = 49,72,122), fontSize = 14.sp)
         }
     }
 }
@@ -311,6 +341,7 @@ fun ProfileScreen(username: String?, onLogin: (String) -> Unit) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
+                colors = ButtonDefaults.buttonColors(containerColor = Color(red = 49,72,122)),
                 onClick = {
                     if (inputName.isNotBlank()) {
                         onLogin(inputName.trim())
@@ -325,12 +356,14 @@ fun ProfileScreen(username: String?, onLogin: (String) -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
+
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Hola, $username 👋", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Text("Hola, $username ", fontSize = 24.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { onLogin("") }) {
+            Button(colors = ButtonDefaults.buttonColors(containerColor = Color(red = 49,72,122)),
+                onClick = { onLogin("") }) {
                 Text("Cerrar sesión")
             }
         }
